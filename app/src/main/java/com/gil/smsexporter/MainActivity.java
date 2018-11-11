@@ -46,13 +46,8 @@ public class MainActivity extends AppCompatActivity {
         requirePermission(Manifest.permission.READ_SMS, SMS_PERMISSION_REQUEST_CODE, new Runnable() {
             @Override
             public void run() {
-                startShowingMessages();
+                SMSPermissionsGranted();
             }
-        });
-
-        requirePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, STORAGE_PERMISSION_REQUEST_CODE, new Runnable() {
-            @Override
-            public void run() {}
         });
     }
 
@@ -72,6 +67,19 @@ public class MainActivity extends AppCompatActivity {
         List<SMSMessage> messages = smsProvider.readAllMessages();
 
         return SMSMessagesFragment.instance(messages, null, new JsonSMSSerializer());
+    }
+
+    void SMSPermissionsGranted() {
+        requirePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, STORAGE_PERMISSION_REQUEST_CODE, new Runnable() {
+            @Override
+            public void run() {
+                StoragePermissionsGranted();
+            }
+        });
+    }
+
+    void StoragePermissionsGranted() {
+        startShowingMessages();
     }
 
     void startShowingMessages() {
@@ -113,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             case SMS_PERMISSION_REQUEST_CODE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startShowingMessages();
+                    SMSPermissionsGranted();
                 } else {
                     Toast.makeText(this, "App must have SMS permissions", Toast.LENGTH_LONG).show();
                     finish();
@@ -123,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
             case STORAGE_PERMISSION_REQUEST_CODE: {
                 if (grantResults.length > 0) {
+                    StoragePermissionsGranted();
                 } else {
                     Toast.makeText(this, "App must have Storage permissions", Toast.LENGTH_LONG).show();
                     finish();

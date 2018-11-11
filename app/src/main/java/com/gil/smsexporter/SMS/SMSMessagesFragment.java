@@ -74,7 +74,7 @@ public class SMSMessagesFragment extends Fragment {
                         serializedMessages
                 );
 
-                Toast.makeText(getActivity(), "Exported SMS Messages To:\n" + path, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Exported SMS Messages To:\n" + path, Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "Error Exporting", Toast.LENGTH_SHORT).show();
