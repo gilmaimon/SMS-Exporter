@@ -117,25 +117,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case SMS_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    SMSPermissionsGranted();
-                } else {
-                    Toast.makeText(this, "App must have SMS permissions", Toast.LENGTH_LONG).show();
-                    finish();
-                }
+        if (requestCode == SMS_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                SMSPermissionsGranted();
+            } else {
+                Toast.makeText(this, "App must have SMS permissions", Toast.LENGTH_LONG).show();
+                finish();
             }
+        }
 
 
-            case STORAGE_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    StoragePermissionsGranted();
-                } else {
-                    Toast.makeText(this, "App must have Storage permissions", Toast.LENGTH_LONG).show();
-                    finish();
-                }
+        if (requestCode == STORAGE_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                StoragePermissionsGranted();
+            } else {
+                Toast.makeText(this, "App must have Storage permissions", Toast.LENGTH_LONG).show();
+                finish();
             }
         }
     }
